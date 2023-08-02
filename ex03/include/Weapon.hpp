@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 15:19:40 by sawang            #+#    #+#             */
-/*   Updated: 2023/08/02 15:32:07 by sawang           ###   ########.fr       */
+/*   Updated: 2023/08/02 18:03:33 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class Weapon
 		Weapon(std::string type);
 		~Weapon();
 
-		std::string const & getType();
+		std::string const & getType() const;
 		void setType(std::string type);
 
 	private:

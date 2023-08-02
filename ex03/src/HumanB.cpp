@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 15:39:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/08/02 17:20:22 by sawang           ###   ########.fr       */
+/*   Updated: 2023/08/02 18:00:15 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	HumanB::attack() const
 		std::cout << this->_name << " attacks with his " << type << std::endl;
 }
 
-void	HumanB::setWeapon(const Weapon &weapon)
+void	HumanB::setWeapon(Weapon const &weapon)
 {
 	this->_weapon = const_cast<Weapon*>(&weapon);
 }

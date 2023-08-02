@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 15:29:57 by sawang            #+#    #+#             */
-/*   Updated: 2023/08/02 17:20:38 by sawang           ###   ########.fr       */
+/*   Updated: 2023/08/02 18:00:21 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class HumanB
 		~HumanB();
 
 		void attack() const;
-		void setWeapon(const Weapon &weapon);
+		void setWeapon(Weapon const &weapon);
 	private:
 		Weapon *_weapon;
 		std::string _name;
