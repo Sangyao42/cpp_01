@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:25:37 by sawang            #+#    #+#             */
-/*   Updated: 2023/08/03 19:04:38 by sawang           ###   ########.fr       */
+/*   Updated: 2023/08/03 20:01:55 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(int argc, char *argv[])
 	if (argc != 4)
 	{
 		std::cerr << "Error: Wrong number of arguments" << std::endl;
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	else if (replacer::StrInFileReplace(argv[1], argv[2], argv[3]))
 		return (EXIT_FAILURE);
