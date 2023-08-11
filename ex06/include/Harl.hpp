@@ -6,11 +6,13 @@
 /*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 21:40:16 by sawang            #+#    #+#             */
-/*   Updated: 2023/08/03 22:03:38 by sawang           ###   ########.fr       */
+/*   Updated: 2023/08/11 21:39:26 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
+#ifndef HARL_HPP
+# define HARL_HPP
+# include <iostream>
 
 class Harl
 {
@@ -29,4 +31,6 @@ class Harl
 
 typedef void (Harl::*HarlMemFn)(void);
 
-#define CALL_MEMBER_FN(object,ptrToMember) ((object).*(ptrToMember))
+# define CALL_MEMBER_FN(object,ptrToMember) ((object).*(ptrToMember))
+
+#endif
