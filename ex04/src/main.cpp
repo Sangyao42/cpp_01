@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:25:37 by sawang            #+#    #+#             */
-/*   Updated: 2023/08/03 20:01:55 by sawang           ###   ########.fr       */
+/*   Updated: 2023/09/04 19:38:42 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ namespace replacer
 		{
 			pos = 0;
 			pos = content.find(s1, pos);
+			//std::string::npos is a constant.
+			// static const size_type npos = -1;
+			// represents either
+			// end of string indicator
+			// or
+			// error indicator by functions which return a string index
 			while (pos != std::string::npos)
 			{
 				content.erase(pos, s1.length());
