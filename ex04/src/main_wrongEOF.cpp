@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   main_wrongEOF.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:25:37 by sawang            #+#    #+#             */
-/*   Updated: 2023/09/05 17:54:52 by sawang           ###   ########.fr       */
+/*   Updated: 2023/09/05 17:09:50 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,14 @@ namespace replacer
 			std::cerr << "Error: " << strerror(errno) << std::endl;
 			return (EXIT_FAILURE);
 		}
-		std::ofstream		ofs(infile + ".replace");
-		if (!ofs.good())
-		{
-			std::cerr << "Error: " << strerror(errno) << std::endl;
-			ifs.close();
-			return (EXIT_FAILURE);
-		}
 		if (s1 == s2)
 		{
 			std::cerr << "Error: s1 and s2 are the same" << std::endl;
 			ifs.close();
-			ofs.close();
 			return (EXIT_FAILURE);
 		}
-		while (std::getline(ifs, content) && ofs.good())
+		std::getline(ifs, content, '\0');
+		if (ifs.eof())
 		{
 			pos = 0;
 			pos = content.find(s1, pos);
@@ -56,14 +49,27 @@ namespace replacer
 				content.insert(pos, s2);
 				pos = content.find(s1, pos);
 			}
-			ofs << content;
-			if (ifs.eof())
-				break;
-			ofs << std::endl;
+			std::ofstream		ofs(infile + ".replace");
+			if (!ofs.good())
+			{
+				std::cerr << "Error: " << strerror(errno) << std::endl;
+				ifs.close();
+				return (EXIT_FAILURE);
+			}
+			else
+			{
+				ofs << content;
+				ifs.close();
+				ofs.close();
+				return (EXIT_SUCCESS);
+			}
 		}
-		ifs.close();
-		ofs.close();
-		return (EXIT_SUCCESS);
+		else
+		{
+			std::cerr << "Error: " << strerror(errno) << std::endl;
+			ifs.close();
+			return (EXIT_FAILURE);
+		}
 	}
 };
 
@@ -74,6 +80,8 @@ int	main(int argc, char *argv[])
 		std::cerr << "Error: Wrong number of arguments" << std::endl;
 		return (EXIT_FAILURE);
 	}
+	else if (replacer::StrInFileReplace(argv[1], argv[2], argv[3]))
+		return (EXIT_FAILURE);
 	else
-		return (replacer::StrInFileReplace(argv[1], argv[2], argv[3]));
+		return (EXIT_SUCCESS);
 }

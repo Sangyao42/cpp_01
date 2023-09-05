@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   main_lastLineLost.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:25:37 by sawang            #+#    #+#             */
-/*   Updated: 2023/09/05 17:54:52 by sawang           ###   ########.fr       */
+/*   Updated: 2023/09/05 17:53:21 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ namespace replacer
 			ofs.close();
 			return (EXIT_FAILURE);
 		}
-		while (std::getline(ifs, content) && ofs.good())
+		std::getline(ifs, content);
+		while (ifs.good() && ofs.good())
 		{
 			pos = 0;
 			pos = content.find(s1, pos);
@@ -57,9 +58,9 @@ namespace replacer
 				pos = content.find(s1, pos);
 			}
 			ofs << content;
-			if (ifs.eof())
-				break;
-			ofs << std::endl;
+			if (!ifs.eof())
+				ofs << std::endl;
+			std::getline(ifs, content);
 		}
 		ifs.close();
 		ofs.close();
