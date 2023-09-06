@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   main_wrongEOF.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:25:37 by sawang            #+#    #+#             */
-/*   Updated: 2023/09/06 17:11:41 by sawang           ###   ########.fr       */
+/*   Updated: 2023/09/05 17:09:50 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,9 @@ namespace replacer
 		std::string			content;
 		size_t				pos;
 
-		if (!ifs)
+		if (!ifs.good())
 		{
 			std::cerr << "Error: " << strerror(errno) << std::endl;
-			return (EXIT_FAILURE);
-		}
-		if (s1.empty())
-		{
-			std::cerr << "Error: s1 is empty" << std::endl;
-			ifs.close();
 			return (EXIT_FAILURE);
 		}
 		if (s1 == s2)
@@ -38,14 +32,8 @@ namespace replacer
 			ifs.close();
 			return (EXIT_FAILURE);
 		}
-		std::ofstream		ofs(infile + ".replace");
-		if (!ofs)
-		{
-			std::cerr << "Error: " << strerror(errno) << std::endl;
-			ifs.close();
-			return (EXIT_FAILURE);
-		}
-		while (std::getline(ifs, content))
+		std::getline(ifs, content, '\0');
+		if (ifs.eof())
 		{
 			pos = 0;
 			pos = content.find(s1, pos);
@@ -61,36 +49,27 @@ namespace replacer
 				content.insert(pos, s2);
 				pos = content.find(s1, pos);
 			}
-			ofs << content;
-			if (!ifs.eof())
-				ofs << std::endl;
+			std::ofstream		ofs(infile + ".replace");
+			if (!ofs.good())
+			{
+				std::cerr << "Error: " << strerror(errno) << std::endl;
+				ifs.close();
+				return (EXIT_FAILURE);
+			}
+			else
+			{
+				ofs << content;
+				ifs.close();
+				ofs.close();
+				return (EXIT_SUCCESS);
+			}
 		}
-		// If getline fails for any reason,
-		//including file not open, file is empty, and file is corrupt and unreadable,
-		// the stream's state will be marked bad and return false when checked by if().
-		// reference
-		// https://stackoverflow.com/questions/33356615/getline-is-returning-nothing-but-blank
-		if (ifs.bad())
+		else
 		{
 			std::cerr << "Error: " << strerror(errno) << std::endl;
 			ifs.close();
-			ofs.close();
-			if (!ofs)
-				std::cerr << "Error: " << strerror(errno) << std::endl;
 			return (EXIT_FAILURE);
 		}
-		ifs.close();
-		ofs.close();
-		// reference
-		// https://stackoverflow.com/questions/28342660/error-handling-in-stdofstream-while-writing-data
-		// https://cplusplus.com/reference/ios/ios/operator_not/
-		// !ofs == true if either the failbit or the badbit is set.
-		if (!ofs)
-		{
-			std::cerr << "Error: " << strerror(errno) << std::endl;
-			return (EXIT_FAILURE);
-		}
-		return (EXIT_SUCCESS);
 	}
 };
 
@@ -101,6 +80,8 @@ int	main(int argc, char *argv[])
 		std::cerr << "Error: Wrong number of arguments" << std::endl;
 		return (EXIT_FAILURE);
 	}
+	else if (replacer::StrInFileReplace(argv[1], argv[2], argv[3]))
+		return (EXIT_FAILURE);
 	else
-		return (replacer::StrInFileReplace(argv[1], argv[2], argv[3]));
+		return (EXIT_SUCCESS);
 }

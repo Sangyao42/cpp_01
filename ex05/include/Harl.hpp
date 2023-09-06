@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 20:05:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/08/11 21:38:50 by sawang           ###   ########.fr       */
+/*   Updated: 2023/09/04 16:44:02 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ class Harl
 		void warning(void);
 		void error(void);
 };
+
+// how to use pointers to member functions
+//https://isocpp.org/wiki/faq/pointers-to-members
 
 typedef void (Harl::*HarlMemFn)(void);
 
